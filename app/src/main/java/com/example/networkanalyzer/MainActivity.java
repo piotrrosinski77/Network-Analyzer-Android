@@ -1,23 +1,19 @@
 package com.example.networkanalyzer;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.networkanalyzer.databinding.ActivityMainBinding;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.WindowManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,5 +57,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+
+    public void disable(View run){ //obiekt typu View
+        run.setEnabled(false); //przycisk wyłączony
+        Button runstep2 = (Button) run; //nowy obiekt klasy Button
+        runstep2.setText("Testing...");//zmiana tekstu
     }
 }

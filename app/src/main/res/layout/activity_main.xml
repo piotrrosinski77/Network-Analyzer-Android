@@ -5,35 +5,28 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@android:color/darker_gray"
     tools:context=".MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.NetworkAnalyzer.AppBarOverlay"
-        app:layout_constraintBottom_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.appbar.AppBarLayout>
 
-    <Button
+<Button
         style="@style/Widget.AppCompat.Button"
+        android:id="@+id/btnTest"
         android:layout_width="325dp"
         android:layout_height="75dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/roundedbutton"
         android:backgroundTint="@android:color/black"
+        android:onClick="disable"
         android:shadowColor="#FFFFFF"
         android:text="@string/run_test"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/teal_200"
         android:textColorHighlight="@color/teal_700"
         android:textColorHint="@color/black"
-        android:textSize="46sp"
+        android:textSize="34sp"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
