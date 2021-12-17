@@ -5,15 +5,14 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@android:color/darker_gray"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
 
-
-<Button
-        style="@style/Widget.AppCompat.Button"
+    <Button
         android:id="@+id/btnTest"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="325dp"
         android:layout_height="75dp"
         android:layout_marginBottom="32dp"
@@ -34,14 +33,63 @@
         app:rippleColor="@color/black"
         app:strokeColor="@color/black" />
 
+    <Switch
+        android:id="@+id/switch5"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="DOWNLOAD"
+        android:textColor="@color/teal_200"
+        android:textOff="OFF"
+        android:textOn="TEST"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/switch6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <Switch
+        android:id="@+id/switch6"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="UPLOAD"
+        android:textColor="@color/teal_200"
+        android:textOff="OFF"
+        android:textOn="TEST"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/switch7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch5" />
+
+    <Switch
+        android:id="@+id/switch7"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="PING"
+        android:textColor="@color/teal_200"
+        android:textOff="OFF"
+        android:textOn="TEST"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnTest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switch6" />
+
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="415dp"
+        android:layout_width="371dp"
         android:layout_height="203dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="448dp"
         android:contentDescription="@string/todo"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img"
         tools:ignore="MissingConstraints" />
 
