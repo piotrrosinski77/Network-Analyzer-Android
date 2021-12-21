@@ -10,6 +10,7 @@
     tools:context=".MainActivity">
 
 
+
     <Button
         android:id="@+id/btnTest"
         style="@style/Widget.AppCompat.Button"
@@ -33,65 +34,119 @@
         app:rippleColor="@color/black"
         app:strokeColor="@color/black" />
 
-    <Switch
-        android:id="@+id/switch5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="DOWNLOAD"
-        android:textColor="@color/teal_200"
-        android:textOff="OFF"
-        android:textOn="TEST"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/switch6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <ImageView
+        android:id="@+id/network"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="416dp"
+        android:contentDescription="@string/todo"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/img"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp" />
 
     <Switch
         android:id="@+id/switch6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="360dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="265dp"
+        android:background="@drawable/roundedbutton"
+        android:minHeight="48dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="80dp"
         android:text="UPLOAD"
         android:textColor="@color/teal_200"
+        android:checked="true"
+        android:textSize="34sp"
         android:textOff="OFF"
         android:textOn="TEST"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/switch7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch5" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Switch
+        android:id="@+id/switchDownload"
+        style="@style/size"
+        android:layout_width="match_parent"
+        android:layout_marginTop="187dp"
+        android:background="@drawable/roundedbutton"
+        android:paddingLeft="25dp"
+        android:paddingRight="80dp"
+        android:text="DOWNLOAD"
+        android:textColor="@color/teal_200"
+        android:textOff="OFF"
+        android:textOn="ON"
+        android:textSize="34sp"
+        android:checked="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
         android:id="@+id/switch7"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="349dp"
+        android:background="@drawable/roundedbutton"
+        android:minHeight="48dp"
+        android:paddingLeft="25dp"
+        android:paddingRight="80dp"
         android:text="PING"
         android:textColor="@color/teal_200"
-        android:textOff="OFF"
-        android:textOn="TEST"
+        android:textOff="@string/off"
+        android:textOn="@string/on"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnTest"
+        android:checked="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch6" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="371dp"
-        android:layout_height="203dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="448dp"
-        android:contentDescription="@string/todo"
+    <ImageButton
+        android:id="@+id/ShareButton"
+        android:layout_width="607dp"
+        android:layout_height="312dp"
+        android:scaleX="0.2"
+        android:scaleY="0.2"
+
+        android:src="@drawable/share2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.076"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/img"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="network" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="74dp"
+        android:layout_marginTop="408dp"
+        android:layout_marginEnd="73dp"
+        android:layout_marginBottom="197dp"
+        android:text="Share your results!"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

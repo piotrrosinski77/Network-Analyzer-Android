@@ -1,6 +1,7 @@
 package com.example.networkanalyzer;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,9 +61,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void disable(View run){ //obiekt typu View
+    public void disable(View run) { //obiekt typu View
         run.setEnabled(false); //przycisk wyłączony
-        Button runstep2 = (Button) run; //nowy obiekt klasy Button
-        runstep2.setText("Testing...");//zmiana tekstu
+        Button runstep = (Button) run;//nowy obiekt klasy Button
+        SystemClock.sleep(100);
+        runstep.setText("Testing...");//zmiana tekstu
     }
 }
