@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
+    android:background="@mipmap/grey_background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -39,10 +39,10 @@
         android:id="@+id/networkimage"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_marginBottom="416dp"
+        android:layout_marginBottom="412dp"
         android:contentDescription="@string/todo"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
+        android:scaleX="1.0"
+        android:scaleY="0.9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:srcCompat="@drawable/networkimage"
         tools:ignore="MissingConstraints"
@@ -103,8 +103,8 @@
         android:id="@+id/sharebutton"
         android:layout_width="607dp"
         android:layout_height="312dp"
-        android:scaleX="0.2"
-        android:scaleY="0.2"
+        android:scaleX="0.25"
+        android:scaleY="0.20"
 
         android:src="@drawable/sharearrow"
         app:layout_constraintBottom_toBottomOf="parent"
