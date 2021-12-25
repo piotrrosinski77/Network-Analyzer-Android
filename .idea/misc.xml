@@ -4,11 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.171875" />
+        <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/drawable/roundedbutton.xml" value="0.2234375" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/layout/activity_main.xml" value="0.46475409836065573" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/layout/content_main.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/layout/fragment_first.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/layout/fragment_second.xml" value="0.20260416666666667" />
+        <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/menu/menu_main.xml" value="0.20729166666666668" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21875" />
+        <entry key="..\:/Users/bluep/AndroidStudioProjects/Network Analyzer/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2234375" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.12407407407407407" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/drawable/ic_launcher_background.xml" value="0.12407407407407407" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.37333333333333335" />
