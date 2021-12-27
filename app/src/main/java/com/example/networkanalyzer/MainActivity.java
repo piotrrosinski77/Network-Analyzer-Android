@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -29,6 +30,12 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.networkanalyzer.databinding.ActivityMainBinding;
+
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -87,4 +94,5 @@ public class MainActivity extends AppCompatActivity {
         SystemClock.sleep(100);
         runstep.setText("Testing...");//zmiana tekstu
     }
+
 }
