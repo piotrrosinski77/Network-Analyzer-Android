@@ -14,4 +14,5 @@
     <string name="off">OFF</string>
     <string name="on">ON</string>
     <string name="test">TEST</string>
+    <string name="tested">Already tested.</string>
 </resources>
