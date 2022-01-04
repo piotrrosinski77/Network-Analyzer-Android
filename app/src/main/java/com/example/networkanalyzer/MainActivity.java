@@ -1,11 +1,8 @@
 package com.example.networkanalyzer;
 
-import android.accessibilityservice.AccessibilityService;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -14,13 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.content.Context;
-import android.os.Bundle;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.BroadcastReceiver;
 import android.widget.Toast;
-
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,11 +22,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.networkanalyzer.databinding.ActivityMainBinding;
 
-import java.io.IOException;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,19 +31,33 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private ConnectivityManager CManager;
     @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setContentView(R.layout.activity_main);
-        CManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (isOnline())
+        {
+            Toast.makeText(MainActivity.this.getApplicationContext(),
+                    "Wykryto połączenie z siecią.", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(MainActivity.this.getApplicationContext(),
+                    "Brak połączenia z siecią.", Toast.LENGTH_LONG).show();
+        }
 
+    }
 
+    public boolean isOnline()
+    {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
     @Override
@@ -94,5 +96,11 @@ public class MainActivity extends AppCompatActivity {
         SystemClock.sleep(100);
         runstep.setText("Testing...");//zmiana tekstu
     }
+
+    OkHttpClient client = new OkHttpClient();
+
+    Request request = new Request.Builder()
+            .url("https://www.vogella.com/index.html")
+            .build();
 
 }
