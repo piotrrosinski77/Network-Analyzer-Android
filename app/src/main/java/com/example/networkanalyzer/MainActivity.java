@@ -1,5 +1,7 @@
 package com.example.networkanalyzer;
 
+import android.graphics.drawable.Drawable;
+import android.os.SystemClock;
 import android.widget.Button;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
@@ -13,8 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.DrawableRes;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -27,15 +32,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    public String ping;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -45,12 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (isOnline())
         {
-                Toast.makeText(MainActivity.this.getApplicationContext(),
-                        "Wykryto połączenie z siecią.", Toast.LENGTH_SHORT).show();
-        }
-        else
+            Toast.makeText(MainActivity.this.getApplicationContext(),
+                    "Wykryto połączenie z siecią.", Toast.LENGTH_SHORT).show();
+        } else
             {
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i <= 3; i++) {
                 Toast.makeText(MainActivity.this.getApplicationContext(),
                         "Brak połączenia z siecią.", Toast.LENGTH_SHORT).show();
             }
@@ -58,24 +61,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
+        if (id == R.id.action_settings) {
             return true;
         }
 
@@ -83,27 +83,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp()
-    {
+    public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
-    public boolean isOnline()
-    {
+    public boolean isOnline() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public void runTest(View v) {
+    public void runTest(View v)
+    {
         v.setEnabled(false);
         Button b = (Button) v;
         b.setText("Testing...");
-            Toast.makeText(MainActivity.this.getApplicationContext(),
-                    "Your internet speed is " + getWifiSpeed() + "Mbps", Toast.LENGTH_LONG).show();
-        }
+        Toast.makeText(MainActivity.this.getApplicationContext(),
+                "Your internet speed is " + getWifiSpeed() + "Mbps", Toast.LENGTH_LONG).show();
+    }
 
     public void getSpecificInfo(View info)
     {
@@ -114,7 +113,8 @@ public class MainActivity extends AppCompatActivity {
         textView2.setText("Your subnet mask is " + getSubnetMask());
 
         TextView textView3 = findViewById(R.id.ping);
-        textView3.setText(ping("google.com"));
+        ping = ping("google.com");
+        textView3.setText(ping);
     }
 
         public int getWifiSpeed()
@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         {
             WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
             String ipAddress = Formatter.formatIpAddress(wifiMgr.getConnectionInfo().getIpAddress());
+            doneLetKnow();
             return ipAddress;
         }
 
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             Process process = Runtime.getRuntime().exec(
-                    "/system/bin/ping -c 8 " + url);
+                    "/system/bin/ping -c 1 " + url);
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
             int i;
@@ -167,6 +168,17 @@ public class MainActivity extends AppCompatActivity {
     {
         String ret = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
         return ret;
+    }
+
+    public void doneLetKnow()
+    {
+        String uri = "@drawable/red_button_done";
+
+        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+        ImageView imageView = findViewById(R.id.redbutton);
+        Drawable res = getResources().getDrawable(imageResource);
+        imageView.setImageDrawable(res);
     }
 }
 
