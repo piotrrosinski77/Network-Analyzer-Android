@@ -30,6 +30,7 @@ import com.example.networkanalyzer.databinding.ActivityMainBinding;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
@@ -39,21 +40,22 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //wykonuje się po włączeniu aplikacji
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //usunięcie Status Bar - wyświetlanie w trybie pełnoekranowym
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         if (isOnline())
         {
             Toast.makeText(MainActivity.this.getApplicationContext(),
-                    "Wykryto połączenie z siecią.", Toast.LENGTH_SHORT).show();
+                    "Wykryto połączenie z siecią.", Toast.LENGTH_SHORT).show(); //feedback
         } else
             {
-            for (int i = 0; i <= 3; i++) {
+            for (int i = 0; i <= 3; i++)
+            {
                 Toast.makeText(MainActivity.this.getApplicationContext(),
                         "Brak połączenia z siecią.", Toast.LENGTH_SHORT).show();
             }
@@ -61,14 +63,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -83,13 +87,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
+    public boolean onSupportNavigateUp()
+    {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
 
-    public boolean isOnline() {
+    public boolean isOnline()
+    {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
@@ -98,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
     public void runTest(View v)
     {
         v.setEnabled(false);
-        Button b = (Button) v;
+        Button b = (Button) v; //rzutowanie
         b.setText("Testing...");
         Toast.makeText(MainActivity.this.getApplicationContext(),
                 "Your internet speed is " + getWifiSpeed() + "Mbps", Toast.LENGTH_LONG).show();
     }
 
-    public void getSpecificInfo(View info)
+    public void getSpecificInfo(View info) //red button
     {
         TextView textView = findViewById(R.id.ip);
         textView.setText("Your Device IP Address: " + getIpAddress());
@@ -147,7 +153,8 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             Process process = Runtime.getRuntime().exec(
-                    "/system/bin/ping -c 1 " + url);
+                    "/system/bin/ping -c 1 " + url); //biblioteka w systemie android, gdzie można znaleźć komendę PING, liczba pakietów
+             new InputStreamReader(process.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
             int i;
@@ -157,18 +164,17 @@ public class MainActivity extends AppCompatActivity {
                 output.append(buffer, 0, i);
             reader.close();
             str = output.toString();
-        } catch (IOException e)
+        } catch (IOException e) // jeśli wystąpi błąd z Input czy Output
         {
-            e.printStackTrace();
+            e.printStackTrace(); //raport
         }
         return str;
     }
 
     private static String intToIP(int ipAddress)
     {
-        String ret = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-        return ret;
-    }
+        return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+    } //bitwise AND operation, Your subnetmask is ippaddr 192.168.232.2 gateway..., 0xff = 11111111
 
     public void doneLetKnow()
     {
