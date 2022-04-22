@@ -1,30 +1,31 @@
 package com.example.networkanalyzer;
 
-import android.graphics.drawable.Drawable;
-import android.os.SystemClock;
-import android.widget.Button;
+
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.networkanalyzer.databinding.ActivityMainBinding;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,24 +38,24 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.M)
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) { //wykonuje się po włączeniu aplikacji
+    protected void onCreate(Bundle savedInstanceState) { //On startup.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //usunięcie Status Bar - wyświetlanie w trybie pełnoekranowym
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //Fullscreen mode.
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (isOnline())
-        {
-            Toast.makeText(MainActivity.this.getApplicationContext(), //feedback
+        getWifiSpeed();//Just testing, delete it later!
+
+        if (isOnline()) {
+            Toast.makeText(MainActivity.this.getApplicationContext(), //Is online or is not :)?
                     "Connection found.", Toast.LENGTH_SHORT).show();
-        } else
-            {
-                Toast.makeText(MainActivity.this.getApplicationContext(),
-                        "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
-            }
+        } else {
+            Toast.makeText(MainActivity.this.getApplicationContext(),
+                    "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
         }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,10 +97,10 @@ public class MainActivity extends AppCompatActivity {
         Button b = (Button) v; //casting
         b.setText("Testing your network connection, please wait...");
         Toast.makeText(MainActivity.this.getApplicationContext(),
-                "Your internet speed is " + getWifiSpeed() + "Mbps", Toast.LENGTH_LONG).show();
+                "Your internet speed is... working on that function right now :)", Toast.LENGTH_LONG).show();
     }
 
-    public void getSpecificInfo(View info) //red button
+    public void getSpecificInfo(View info)
     {
         TextView textView = findViewById(R.id.ip);
         textView.setText("Your Device IP Address: " + getIpAddress());
@@ -112,17 +113,16 @@ public class MainActivity extends AppCompatActivity {
         textView3.setText(ping);
     }
 
-    public int getWifiSpeed() {
-        WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-        int speed = wifiInfo.getLinkSpeed();
-        return speed;
+    public void getWifiSpeed() {
+        long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
+        wait(777);
+        long usedTime = System.currentTimeMillis() - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
+        Log.i("time", "usedtime"+usedTime );//PS works
     }
 
     public String getIpAddress() {
         WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         String ipAddress = Formatter.formatIpAddress(wifiMgr.getConnectionInfo().getIpAddress());
-        doneLetKnow();
         return ipAddress;
     }
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         String str = "";
         try {
             Process process = Runtime.getRuntime().exec(
-                    "/system/bin/ping -c 1 " + url); //library in Android, where PING command can be found.
+                    "/system/bin/ping -c 1 " + url); //A library in Android, where PING command can be found.
             new InputStreamReader(process.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));
@@ -148,35 +148,27 @@ public class MainActivity extends AppCompatActivity {
                 output.append(buffer, 0, i);
             reader.close();
             str = output.toString();
-        } catch (IOException e)
-        {
-            e.printStackTrace(); //raport
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return str;
     }
 
     private static String intToIP(int ipAddress) {
         return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-    } //bitwise AND operation, Your subnetmask is ippaddr 192.168.232.2 gateway..., 0xff = 11111111
+    } //Bitwise AND operation, Your subnetmask is ippaddr 192.168.232.2 gateway..., 0xff = 11111111...
 
-    public void doneLetKnow() {
-        String uri = "@drawable/red_button_done";
-
-        int imageResource = getResources().getIdentifier(uri, null, getPackageName());
-
-        ImageView imageView = findViewById(R.id.redbutton);
-        Drawable res = getResources().getDrawable(imageResource);
-        imageView.setImageDrawable(res);
-    }
-
-    public long measureTime()
+    public static void wait(int ms) //One may use it to delay next actions
     {
-    long start = System.nanoTime();
-    SystemClock.sleep(3000);
-    long end = System.nanoTime();
-    return end - start;
+        try
+        {
+            Thread.sleep(ms);
+        }
+        catch(InterruptedException ex)
+        {
+            Thread.currentThread().interrupt();
+        }
     }
 }
-
 
 
