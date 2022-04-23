@@ -1,4 +1,4 @@
-### Network88 `#00ff00(Android)`
+### Network88 (Android) ![#f03c15](https://via.placeholder.com/15/f03c15/000000?text=+)`#f03c15`
 #### Temat projektu: Program obsługujący platformę mobilną, służący do analizy sieci bezprzewodowej.
 Funkcje aplikacji mobilnej:
 1. Wyświetla adres IP hosta.
