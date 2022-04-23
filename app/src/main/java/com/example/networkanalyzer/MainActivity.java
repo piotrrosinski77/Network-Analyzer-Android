@@ -1,6 +1,5 @@
 package com.example.networkanalyzer;
 
-
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
@@ -28,7 +27,10 @@ import com.example.networkanalyzer.databinding.ActivityMainBinding;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
@@ -46,7 +48,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getWifiSpeed();//Just testing, delete it later!
+        try {
+            getWifiSpeed();//Just testing, remember to delete it later!
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (isOnline()) {
             Toast.makeText(MainActivity.this.getApplicationContext(), //Is online or is not :)?
@@ -113,11 +119,15 @@ public class MainActivity extends AppCompatActivity {
         textView3.setText(ping);
     }
 
-    public void getWifiSpeed() {
-        long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
-        wait(777);
-        long usedTime = System.currentTimeMillis() - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
-        Log.i("time", "usedtime"+usedTime );//PS works
+    public void getWifiSpeed() throws java.io.IOException{
+        URL downloadFileUrl100MB = new URL("http://cachefly.cachefly.net/100mb.test");
+            Log.d("Start", "Used URL: http://cachefly.cachefly.net/100mb.test");//Basic info in the beginning.
+            long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
+            HttpURLConnection connection = (HttpURLConnection) downloadFileUrl100MB.openConnection();
+            connection.setRequestProperty("accept", "application/json");
+            long usedTime = System.currentTimeMillis() - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
+            Log.d("Start time", "start time"+startTime);
+            Log.d("Time", "used time"+usedTime );//PS work
     }
 
     public String getIpAddress() {
@@ -156,7 +166,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String intToIP(int ipAddress) {
         return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-    } //Bitwise AND operation, Your subnetmask is ippaddr 192.168.232.2 gateway..., 0xff = 11111111...
+    } //Bitwise AND operation, Your subnet mask is ip address 192.168.232.2 gateway..., 0xff = 11111111...
 
     public static void wait(int ms) //One may use it to delay next actions
     {
