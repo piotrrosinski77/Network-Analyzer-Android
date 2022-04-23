@@ -1,5 +1,5 @@
-###Network88 (ANDROID)
-# Temat projektu: Program obsługujący platformę mobilną, służący do analizy sieci bezprzewodowej.
+### Network88 (Android)
+#### Temat projektu: Program obsługujący platformę mobilną, służący do analizy sieci bezprzewodowej.
 Funkcje aplikacji mobilnej:
 1. Wyświetla adres IP hosta.
 2. Pokazuje maskę podsieci.
