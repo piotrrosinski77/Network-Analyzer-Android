@@ -1,4 +1,4 @@
-# Projekt-2 (ANDROID)
+#Network88 (ANDROID)
 ### Temat projektu: Program obsługujący platformę mobilną, służący do analizy sieci bezprzewodowej.
 
 Funkcje aplikacji mobilnej:
