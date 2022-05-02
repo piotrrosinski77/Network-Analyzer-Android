@@ -1,4 +1,4 @@
-package com.example.networkanalyzer;
+package com.example.network88;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.networkanalyzer.databinding.FragmentSecondBinding;
+import com.example.network88.databinding.FragmentSecondBinding;
 
 public class SecondFragment extends Fragment {
 

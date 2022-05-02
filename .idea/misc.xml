@@ -25,6 +25,10 @@
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/layout/togglebutton.xml" value="0.3651041666666667" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/bluep/AndroidStudioProjects/NetworkAnalyzer/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.173" />
+        <entry key="app/src/main/res/drawable/roundedbutton.xml" value="0.173" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1640625" />
+        <entry key="app/src/main/res/menu/menu_main.xml" value="0.1640625" />
       </map>
     </option>
   </component>

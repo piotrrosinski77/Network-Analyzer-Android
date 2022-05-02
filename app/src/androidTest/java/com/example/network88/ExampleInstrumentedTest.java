@@ -1,4 +1,4 @@
-package com.example.networkanalyzer;
+package com.example.network88;
 
 import android.content.Context;
 

@@ -1,8 +1,8 @@
-package com.example.networkanalyzer;
+package com.example.network88;
 
-import android.net.ConnectivityManager;
+
 import android.net.DhcpInfo;
-import android.net.NetworkInfo;
+
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,11 +23,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.networkanalyzer.R;
 import com.example.networkanalyzer.databinding.ActivityMainBinding;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if (isOnline()) {
+        Network network = new Network();
+        if (network.isOnline()) {
             Toast.makeText(MainActivity.this.getApplicationContext(), //Is online or is not :)?
                     "Connection found.", Toast.LENGTH_SHORT).show();
         } else {
@@ -93,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
+
     }
 
     public void runTest(View v) {
