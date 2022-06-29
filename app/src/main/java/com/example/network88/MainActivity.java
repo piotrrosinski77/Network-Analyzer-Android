@@ -23,8 +23,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.networkanalyzer.R;
-import com.example.networkanalyzer.databinding.ActivityMainBinding;
+import com.example.network88.R;
+import com.example.network88.databinding.ActivityMainBinding;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -90,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
-    }
-
-    public boolean isOnline() {
-
     }
 
     public void runTest(View v) {
