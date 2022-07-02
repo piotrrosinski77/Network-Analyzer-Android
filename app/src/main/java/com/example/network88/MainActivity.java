@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (isOnline()) {
-            Toast.makeText(MainActivity.this.getApplicationContext(), //Is online or is not :)?
+            Toast.makeText(MainActivity.this.getApplicationContext(),
                     "Connection found.", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(MainActivity.this.getApplicationContext(),
@@ -65,19 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -126,9 +121,11 @@ public class MainActivity extends AppCompatActivity {
             long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
             HttpURLConnection connection = (HttpURLConnection) downloadFileUrl100MB.openConnection();
             connection.setRequestProperty("accept", "application/json");
-            long usedTime = System.currentTimeMillis() - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
-            Log.d("Start time", "start time"+startTime);
-            Log.d("Time", "used time"+usedTime );//PS work
+            long stopTime = System.currentTimeMillis();
+            long usedTime = stopTime - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
+            Log.d("startTime", "Start time: " + startTime);
+            Log.d("stopTime", "Stop time: " + stopTime);
+            Log.d("usedTime", "Used time: " + usedTime);//PS work
     }
 
     public String getIpAddress() {
