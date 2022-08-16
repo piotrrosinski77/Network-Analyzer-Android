@@ -33,6 +33,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import fr.bmartel.speedtest.SpeedTestReport;
+import fr.bmartel.speedtest.SpeedTestSocket;
+import fr.bmartel.speedtest.SpeedTestTask;
+import fr.bmartel.speedtest.inter.ISpeedTestListener;
+import fr.bmartel.speedtest.model.SpeedTestError;
+
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -102,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 "Your internet speed is... working on that function right now :)", Toast.LENGTH_LONG).show();
     }
 
-    public void getSpecificInfo(View info)
-    {
+    public void getSpecificInfo(View info) {
         TextView textView = findViewById(R.id.ip);
         textView.setText("Your Device IP Address: " + getIpAddress());
 
@@ -115,17 +120,17 @@ public class MainActivity extends AppCompatActivity {
         textView3.setText(ping);
     }
 
-    public void getWifiSpeed() throws java.io.IOException{
+    public void getWifiSpeed() throws java.io.IOException {
         URL downloadFileUrl100MB = new URL("http://cachefly.cachefly.net/100mb.test");
-            Log.d("Start", "Used URL: http://cachefly.cachefly.net/100mb.test");//Basic info in the beginning.
-            long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
-            HttpURLConnection connection = (HttpURLConnection) downloadFileUrl100MB.openConnection();
-            connection.setRequestProperty("accept", "application/json");
-            long stopTime = System.currentTimeMillis();
-            long usedTime = stopTime - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
-            Log.d("startTime", "Start time: " + startTime);
-            Log.d("stopTime", "Stop time: " + stopTime);
-            Log.d("usedTime", "Used time: " + usedTime);//PS work
+        Log.d("Start", "Used URL: http://cachefly.cachefly.net/100mb.test");//Basic info in the beginning.
+        long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
+        HttpURLConnection connection = (HttpURLConnection) downloadFileUrl100MB.openConnection();
+        connection.setRequestProperty("accept", "application/json");
+        long stopTime = System.currentTimeMillis();
+        long usedTime = stopTime - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
+        Log.d("startTime", "Start time: " + startTime);
+        Log.d("stopTime", "Stop time: " + stopTime);
+        Log.d("usedTime", "Used time: " + usedTime);//PS work
     }
 
     public String getIpAddress() {
@@ -168,15 +173,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static void wait(int ms) //One may use it to delay next actions
     {
-        try
-        {
+        try {
             Thread.sleep(ms);
-        }
-        catch(InterruptedException ex)
-        {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
     }
 }
-
-
