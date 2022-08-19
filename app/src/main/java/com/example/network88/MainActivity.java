@@ -6,6 +6,7 @@ import android.net.DhcpInfo;
 
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.format.Formatter;
@@ -30,12 +31,11 @@ import com.example.network88.databinding.ActivityMainBinding;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
-import fr.bmartel.speedtest.SpeedTestTask;
 import fr.bmartel.speedtest.inter.ISpeedTestListener;
 import fr.bmartel.speedtest.model.SpeedTestError;
 
@@ -55,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        try {
-            getWifiSpeed();//Just testing, remember to delete it later!
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         if (isOnline()) {
             Toast.makeText(MainActivity.this.getApplicationContext(),
                     "Connection found.", Toast.LENGTH_SHORT).show();
@@ -93,6 +88,49 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    public class SpeedTestTask extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            SpeedTestSocket speedTestSocket = new SpeedTestSocket();
+
+            // add a listener to wait for speedtest completion and progress
+            speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
+
+                @Override
+                public void onCompletion(SpeedTestReport report) {
+                    // called when download/upload is finished
+                    BigDecimal bit = report.getTransferRateBit();
+                    double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
+                    Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    Log.v("speedtest", "completed rate in Mbit/s: " + MbitFinal);
+                }
+
+                @Override
+                public void onError(SpeedTestError speedTestError, String errorMessage) {
+                    // called when a download/upload error occur
+                }
+
+                @Override
+                public void onProgress(float percent, SpeedTestReport report) {
+                    // called to notify download/upload progress
+                    BigDecimal bit = report.getTransferRateBit();
+                    double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
+                    Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+                    Log.v("speedtest", "progress: " + percent + "%");
+                    Log.v("speedtest", "rate in Mbit/s: " + MbitFinal);
+                }
+            });
+
+            speedTestSocket.startDownload("http://ipv4.ikoula.testdebit.info/10M.iso");
+
+            return null;
+        }
+    }
+
+
     public boolean isOnline() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -104,11 +142,13 @@ public class MainActivity extends AppCompatActivity {
         v.setEnabled(false);
         Button b = (Button) v; //casting
         b.setText("Testing your network connection, please wait...");
+        getWifiSpeed();
+        getSpecificInfo();
         Toast.makeText(MainActivity.this.getApplicationContext(),
-                "Your internet speed is... working on that function right now :)", Toast.LENGTH_LONG).show();
+                "Your internet speed is... check debug section :)", Toast.LENGTH_LONG).show();
     }
 
-    public void getSpecificInfo(View info) {
+    public void getSpecificInfo() {
         TextView textView = findViewById(R.id.ip);
         textView.setText("Your Device IP Address: " + getIpAddress());
 
@@ -120,17 +160,8 @@ public class MainActivity extends AppCompatActivity {
         textView3.setText(ping);
     }
 
-    public void getWifiSpeed() throws java.io.IOException {
-        URL downloadFileUrl100MB = new URL("http://cachefly.cachefly.net/100mb.test");
-        Log.d("Start", "Used URL: http://cachefly.cachefly.net/100mb.test");//Basic info in the beginning.
-        long startTime = System.currentTimeMillis(); //Starting the stopwatch (system's clock), maybe not the best method, time will show.
-        HttpURLConnection connection = (HttpURLConnection) downloadFileUrl100MB.openConnection();
-        connection.setRequestProperty("accept", "application/json");
-        long stopTime = System.currentTimeMillis();
-        long usedTime = stopTime - startTime; //Eventually we get the time used to download the file (expected to be on the end of the method).
-        Log.d("startTime", "Start time: " + startTime);
-        Log.d("stopTime", "Stop time: " + stopTime);
-        Log.d("usedTime", "Used time: " + usedTime);//PS work
+    public void getWifiSpeed() {
+        new SpeedTestTask().execute();
     }
 
     public String getIpAddress() {
