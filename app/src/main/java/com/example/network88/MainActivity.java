@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     BigDecimal bit = report.getTransferRateBit();
                     double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
                     Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                    Log.v("speedtest", "completed rate in Mbit/s: " + MbitFinal);
+                    Log.v("download", "completed rate in Mbit/s: " + MbitFinal);
                 }
 
                 @Override
@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
                     Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
-                    Log.v("speedtest", "progress: " + percent + "%");
-                    Log.v("speedtest", "rate in Mbit/s: " + MbitFinal);
+                    Log.v("progress", "progress: " + percent + "%");
+                    Log.v("currentSpeed", "rate in Mbit/s: " + MbitFinal);
                 }
             });
 
