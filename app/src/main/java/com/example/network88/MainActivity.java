@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     public String ping;
+    public String ToastMbs;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -103,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
                     // called when download/upload is finished
                     BigDecimal bit = report.getTransferRateBit();
                     double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
-                    Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                    Log.v("download", "completed rate in Mbit/s: " + MbitFinal);
+                    double MbitFinalCompleted = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    Log.v("download", "completed rate in Mbit/s: " + MbitFinalCompleted);
+                    ToastMbs = String.valueOf(MbitFinalCompleted);
                 }
 
                 @Override
@@ -117,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
                     // called to notify download/upload progress
                     BigDecimal bit = report.getTransferRateBit();
                     double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
-                    Double MbitFinal = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+                    double MbitFinalProgress = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
                     Log.v("progress", "progress: " + percent + "%");
-                    Log.v("currentSpeed", "rate in Mbit/s: " + MbitFinal);
+                    Log.v("currentSpeed", "rate in Mbit/s: " + MbitFinalProgress);
                 }
             });
 
@@ -130,13 +132,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public boolean isOnline() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
-
 
     public void runTest(View v) {
         v.setEnabled(false);
@@ -144,8 +144,9 @@ public class MainActivity extends AppCompatActivity {
         b.setText("Testing your network connection, please wait...");
         getWifiSpeed();
         getSpecificInfo();
+        wait(5000);
         Toast.makeText(MainActivity.this.getApplicationContext(),
-                "Your internet speed is... check debug section :)", Toast.LENGTH_LONG).show();
+                "Your internet speed is " + ToastMbs + "Mbs", Toast.LENGTH_LONG).show();
     }
 
     public void getSpecificInfo() {
