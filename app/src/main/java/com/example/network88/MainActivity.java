@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     public String ping;
-    public String ToastMbs;
+    public String ToastMbsDownload;
+    public String ToastMbsUpload;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if (isOnline()) {
             Toast.makeText(MainActivity.this.getApplicationContext(),
                     "Connection found.", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(MainActivity.this.getApplicationContext(),
                     "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public class SpeedTestTask extends AsyncTask<Void, Void, String> {
+    public class SpeedTestTaskDownload extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {
@@ -103,10 +105,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onCompletion(SpeedTestReport report) {
                     // called when download/upload is finished
                     BigDecimal bit = report.getTransferRateBit();
-                    double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
+
+                    double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
                     double MbitFinalCompleted = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
-                    Log.v("download", "completed rate in Mbit/s: " + MbitFinalCompleted);
-                    ToastMbs = String.valueOf(MbitFinalCompleted);
+
+                    Log.v("downloadCompleted", "completed rate in Mbit/s: " + MbitFinalCompleted);
                 }
 
                 @Override
@@ -118,15 +121,62 @@ public class MainActivity extends AppCompatActivity {
                 public void onProgress(float percent, SpeedTestReport report) {
                     // called to notify download/upload progress
                     BigDecimal bit = report.getTransferRateBit();
-                    double Mbit = Double.parseDouble(String.valueOf(bit))/1000000; ;
+
+                    double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
                     double MbitFinalProgress = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
-                    Log.v("progress", "progress: " + percent + "%");
-                    Log.v("currentSpeed", "rate in Mbit/s: " + MbitFinalProgress);
+                    Log.v("progressDownload", "progress: " + percent + "%");
+                    Log.v("currentSpeedDownload", "rate in Mbit/s: " + MbitFinalProgress);
+                    ToastMbsDownload = String.valueOf(MbitFinalProgress);
                 }
             });
 
-            speedTestSocket.startDownload("http://ipv4.ikoula.testdebit.info/10M.iso");
+            speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/100M.iso", 10000);
+
+            return null;
+        }
+    }
+    public class SpeedTestTaskUpload extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            SpeedTestSocket speedTestSocket = new SpeedTestSocket();
+
+            // add a listener to wait for speedtest completion and progress
+            speedTestSocket.addSpeedTestListener(new ISpeedTestListener() {
+
+                @Override
+                public void onCompletion(SpeedTestReport report) {
+                    // called when download/upload is finished
+                    BigDecimal bit = report.getTransferRateBit();
+
+                    double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
+                    double MbitFinalCompleted = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+                    Log.v("uploadCompleted", "completed rate in Mbit/s: " + MbitFinalCompleted);
+                }
+
+                @Override
+                public void onError(SpeedTestError speedTestError, String errorMessage) {
+                    // called when a download/upload error occur
+                }
+
+                @Override
+                public void onProgress(float percent, SpeedTestReport report) {
+                    // called to notify download/upload progress
+                    BigDecimal bit = report.getTransferRateBit();
+
+                    double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
+                    double MbitFinalProgress = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
+
+                    Log.v("progressUpload", "progress: " + percent + "%");
+                    Log.v("currentSpeedUpload", "rate in Mbit/s: " + MbitFinalProgress);
+                    ToastMbsUpload = String.valueOf(MbitFinalProgress);
+                }
+            });
+
+            speedTestSocket.startFixedUpload("http://ipv4.ikoula.testdebit.info/", 10000000, 10000);
 
             return null;
         }
@@ -139,14 +189,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runTest(View v) {
-        v.setEnabled(false);
         Button b = (Button) v; //casting
-        b.setText("Testing your network connection, please wait...");
-        getWifiSpeed();
+        b.setText("Press to run your test again");
+
+        getDownloadSpeed();
+        getUploadspeed();
+
+        wait(3000);
+
         getSpecificInfo();
-        wait(5000);
         Toast.makeText(MainActivity.this.getApplicationContext(),
-                "Your internet speed is " + ToastMbs + "Mbs", Toast.LENGTH_LONG).show();
+                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();
     }
 
     public void getSpecificInfo() {
@@ -161,8 +214,14 @@ public class MainActivity extends AppCompatActivity {
         textView3.setText(ping);
     }
 
-    public void getWifiSpeed() {
-        new SpeedTestTask().execute();
+    public void getDownloadSpeed() {
+
+        new SpeedTestTaskDownload().execute();
+    }
+
+    public void getUploadspeed(){
+
+        new SpeedTestTaskUpload().execute();
     }
 
     public String getIpAddress() {
