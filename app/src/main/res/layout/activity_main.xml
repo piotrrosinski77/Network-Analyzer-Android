@@ -97,6 +97,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <TextView
+        android:id="@+id/textView_Download"
+        android:layout_width="84dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Download:"
+        android:textSize="11sp"
+        android:textColor="@color/teal_200"
+        android:paddingTop="20px"
+        android:paddingLeft="24px"
+        app:layout_constraintBottom_toTopOf="@+id/run"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ping"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView_Upload"
+        android:layout_width="84dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="176dp"
+        android:layout_marginBottom="34dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Upload:"
+        android:textSize="11sp"
+        android:textColor="@color/teal_200"
+        android:paddingTop="20px"
+        android:paddingLeft="24px"
+        app:layout_constraintBottom_toTopOf="@+id/run"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ping"
+        app:layout_constraintVertical_bias="1.0" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
@@ -110,6 +147,5 @@
         android:layout_height="wrap_content"
         app:barrierDirection="left"
         app:constraint_referenced_ids="networkimage" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
