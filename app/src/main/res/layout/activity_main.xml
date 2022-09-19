@@ -25,14 +25,13 @@
         android:textColor="@color/teal_200"
         android:textColorHighlight="@color/teal_700"
         android:textColorHint="@color/black"
-        android:textSize="18sp"
+        android:textSize="22sp"
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/black"
         app:strokeColor="@color/black" />
-
 
 
     <ImageView
@@ -106,11 +105,11 @@
         android:layout_marginTop="176dp"
         android:layout_marginBottom="34dp"
         android:background="@drawable/roundedbutton"
-        android:text="Download:"
-        android:textSize="11sp"
-        android:textColor="@color/teal_200"
-        android:paddingTop="20px"
         android:paddingLeft="24px"
+        android:paddingTop="20px"
+        android:text="Download:"
+        android:textColor="@color/teal_200"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/run"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ping"
@@ -124,11 +123,11 @@
         android:layout_marginTop="176dp"
         android:layout_marginBottom="34dp"
         android:background="@drawable/roundedbutton"
-        android:text="Upload:"
-        android:textSize="11sp"
-        android:textColor="@color/teal_200"
+        android:paddingLeft="50px"
         android:paddingTop="20px"
-        android:paddingLeft="24px"
+        android:text="Upload:"
+        android:textColor="@color/teal_200"
+        android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/run"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ping"
@@ -147,5 +146,19 @@
         android:layout_height="wrap_content"
         app:barrierDirection="left"
         app:constraint_referenced_ids="networkimage" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

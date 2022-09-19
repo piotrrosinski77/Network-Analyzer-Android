@@ -198,8 +198,9 @@ public class MainActivity extends AppCompatActivity {
         wait(3000);
 
         getSpecificInfo();
-        Toast.makeText(MainActivity.this.getApplicationContext(),
-                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();
+        displayNetworkParameters();
+        /*Toast.makeText(MainActivity.this.getApplicationContext(),
+                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();*/
     }
 
     public void getSpecificInfo() {
@@ -212,6 +213,14 @@ public class MainActivity extends AppCompatActivity {
         TextView textView3 = findViewById(R.id.ping);
         ping = ping("google.com");
         textView3.setText(ping);
+    }
+
+    public void  displayNetworkParameters() {
+        TextView textViewDownload = findViewById(R.id.textView_Download);
+        textViewDownload.setText("Download: \n\n" + "    " + ToastMbsDownload);
+
+        TextView textViewUpload = findViewById(R.id.textView_Upload);
+        textViewUpload.setText("Upload: \n\n" + "   " + ToastMbsUpload);
     }
 
     public void getDownloadSpeed() {
