@@ -189,8 +189,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void runTest(View v) {
-        Button b = (Button) v; //casting
-        b.setText("Press to run your test again");
+        Button runTestButton = (Button) v; //casting
+        runTestButton.setText("Press to run your test again");
 
         getDownloadSpeed();
         getUploadspeed();
@@ -198,20 +198,30 @@ public class MainActivity extends AppCompatActivity {
         wait(3000);
 
         getSpecificInfo();
-        Toast.makeText(MainActivity.this.getApplicationContext(),
-                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();
+        displayNetworkParameters();
+
+        /*Toast.makeText(MainActivity.this.getApplicationContext(),
+                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();*/
     }
 
     public void getSpecificInfo() {
-        TextView textView = findViewById(R.id.ip);
-        textView.setText("Your Device IP Address: " + getIpAddress());
+        TextView textViewIP = findViewById(R.id.ip);
+        textViewIP.setText("IP Address:\n" + getIpAddress());
 
-        TextView textView2 = findViewById(R.id.mask);
-        textView2.setText("Your subnet mask is " + getSubnetMask());
+        TextView textViewMask = findViewById(R.id.mask);
+        textViewMask.setText("Subnet mask:\n" + getSubnetMask());
 
-        TextView textView3 = findViewById(R.id.ping);
+        TextView textViewPing = findViewById(R.id.ping);
         ping = ping("google.com");
-        textView3.setText(ping);
+        textViewPing.setText(ping);
+    }
+
+    public void  displayNetworkParameters() {
+        TextView textViewDownload = findViewById(R.id.textView_Download);
+        textViewDownload.setText("Download: \n\n" + "   " + ToastMbsDownload);
+
+        TextView textViewUpload = findViewById(R.id.textView_Upload);
+        textViewUpload.setText("Upload: \n\n" + "   " + ToastMbsUpload);
     }
 
     public void getDownloadSpeed() {
