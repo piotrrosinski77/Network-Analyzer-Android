@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/100M.iso", 10000);
+            speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/50M.iso", 5000);
 
             return null;
         }
@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            speedTestSocket.startFixedUpload("http://ipv4.ikoula.testdebit.info/", 10000000, 10000);
+            speedTestSocket.startFixedUpload("http://ipv4.ikoula.testdebit.info/", 10000000, 5000);
 
             return null;
         }
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         getDownloadSpeed();
         getUploadspeed();
 
-        wait(3000);
+        wait(3500);
 
         getSpecificInfo();
         displayNetworkParameters();
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textViewPing = findViewById(R.id.ping);
         ping = ping("google.com");
-        textViewPing.setText(ping);
+        textViewPing.setText("Pinging google.com\n= " + ping);
     }
 
     public void  displayNetworkParameters() {
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
             char[] buffer = new char[4096];
             StringBuffer output = new StringBuffer();
             while ((i = reader.read(buffer)) > 0)
-                output.append(buffer, 0, i);
+                output.append(buffer, 140, 146);
             reader.close();
             str = output.toString();
         } catch (IOException e) {
