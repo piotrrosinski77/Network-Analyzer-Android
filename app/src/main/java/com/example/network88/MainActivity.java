@@ -93,6 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
     public class SpeedTestTaskDownload extends AsyncTask<Void, Void, String> {
 
+        protected void onPreExecute() {
+
+        }
+
         @Override
         protected String doInBackground(Void... params) {
 
@@ -259,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
             char[] buffer = new char[4096];
             StringBuffer output = new StringBuffer();
             while ((i = reader.read(buffer)) > 0)
-                output.append(buffer, 140, 146);
+                output.append(buffer, 95, 146);
             reader.close();
             str = output.toString();
         } catch (IOException e) {

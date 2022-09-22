@@ -91,7 +91,7 @@
     <TextView
         android:id="@+id/ping"
         android:layout_width="0dp"
-        android:layout_height="58dp"
+        android:layout_height="70dp"
         android:layout_marginTop="288dp"
         android:background="@drawable/roundedbutton"
         android:minHeight="48dp"
@@ -111,7 +111,7 @@
         android:id="@+id/textView_Download"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="176dp"
         android:layout_marginBottom="42dp"
         android:background="@drawable/circlebutton"
@@ -123,13 +123,13 @@
         app:layout_constraintBottom_toTopOf="@+id/run"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ping"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.862" />
 
     <TextView
         android:id="@+id/textView_Upload"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="216dp"
+        android:layout_marginStart="208dp"
         android:layout_marginTop="176dp"
         android:layout_marginBottom="42dp"
         android:background="@drawable/circlebutton"
@@ -141,7 +141,7 @@
         app:layout_constraintBottom_toTopOf="@+id/run"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ping"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.862" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -169,6 +169,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="150dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="56dp"
+        android:layout_height="47dp"
+        android:background="@color/grey90"
+        app:srcCompat="@drawable/ic_ios_share_fill0_wght400_grad0_opsz48"
+        tools:layout_editor_absoluteX="150dp"
+        tools:layout_editor_absoluteY="421dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
