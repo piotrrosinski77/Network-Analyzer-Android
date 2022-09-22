@@ -91,7 +91,7 @@
     <TextView
         android:id="@+id/ping"
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="72dp"
         android:layout_marginTop="288dp"
         android:background="@drawable/roundedbutton"
         android:minHeight="48dp"
@@ -170,14 +170,5 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="150dp" />
-
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="56dp"
-        android:layout_height="47dp"
-        android:background="@color/grey90"
-        app:srcCompat="@drawable/ic_ios_share_fill0_wght400_grad0_opsz48"
-        tools:layout_editor_absoluteX="150dp"
-        tools:layout_editor_absoluteY="421dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
