@@ -9,6 +9,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
     public String ping;
-    public String ToastMbsDownload;
-    public String ToastMbsUpload;
+    public String mbsDownload;
+    public String mbsUpload;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -57,15 +59,51 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (isOnline()) {
-            Toast.makeText(MainActivity.this.getApplicationContext(),
-                    "Connection found.", Toast.LENGTH_SHORT).show();
+        TextView textViewDownload = findViewById(R.id.textView_Download);
+        TextView textViewUpload = findViewById(R.id.textView_Upload);
+        TextView textViewIP = findViewById(R.id.ip);
+        TextView textViewMask = findViewById(R.id.mask);
+        TextView textViewPing = findViewById(R.id.ping);
 
-        } else {
-            Toast.makeText(MainActivity.this.getApplicationContext(),
-                    "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
-        }
-    }
+        Button runButton = (Button) findViewById(R.id.run);
+        runButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button runTestButton = (Button) v;
+                new Thread(new Runnable() {
+                    public void run() {
+
+                        getDownloadSpeed();
+                        getUploadspeed();
+                        SystemClock.sleep(3500);
+
+                        runTestButton.post(new Runnable() {
+                            public void run() {
+                                runTestButton.setText("Press to run your test again");
+
+                                textViewDownload.setText("Download: \n\n" + "   " + mbsDownload);
+                                textViewUpload.setText("Upload: \n\n" + "   " + mbsUpload);
+
+                                textViewIP.setText("IP Address:\n" + getIpAddress());
+                                textViewMask.setText("Subnet mask:\n" + getSubnetMask());
+                                textViewPing.setText("Pinging google.com\n= " + ping("google.com"));
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
+                if (isOnline()) {
+                    Toast.makeText(MainActivity.this.getApplicationContext(),
+                            "Connection found.", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(MainActivity.this.getApplicationContext(),
+                            "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
+                }
+            }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,9 +165,10 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.v("progressDownload", "progress: " + percent + "%");
                     Log.v("currentSpeedDownload", "rate in Mbit/s: " + MbitFinalProgress);
-                    ToastMbsDownload = String.valueOf(MbitFinalProgress);
+                    mbsDownload = String.valueOf(MbitFinalProgress);
                 }
             });
+
 
             speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/50M.iso", 5000);
 
@@ -172,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Log.v("progressUpload", "progress: " + percent + "%");
                     Log.v("currentSpeedUpload", "rate in Mbit/s: " + MbitFinalProgress);
-                    ToastMbsUpload = String.valueOf(MbitFinalProgress);
+                    mbsUpload = String.valueOf(MbitFinalProgress);
                 }
             });
 
@@ -188,25 +227,11 @@ public class MainActivity extends AppCompatActivity {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public void runTest(View v) {
-        Button runTestButton = (Button) v; //casting
-        runTestButton.setText("Press to run your test again");
+    /*
 
-        getDownloadSpeed();
-        getUploadspeed();
-
-        wait(3500);
-
-        getSpecificInfo();
-        displayNetworkParameters();
-
-        /*Toast.makeText(MainActivity.this.getApplicationContext(),
-                ("Your download speed is " + ToastMbsDownload + "Mbs, your upload speed is " + ToastMbsUpload + "Mbs"), Toast.LENGTH_LONG).show();*/
-    }
+    ###############################################################################################
 
     public void getSpecificInfo() {
-        TextView textViewIP = findViewById(R.id.ip);
-        textViewIP.setText("IP Address:\n" + getIpAddress());
 
         TextView textViewMask = findViewById(R.id.mask);
         textViewMask.setText("Subnet mask:\n" + getSubnetMask());
@@ -216,6 +241,7 @@ public class MainActivity extends AppCompatActivity {
         textViewPing.setText("Pinging google.com\n= " + ping);
     }
 
+
     public void  displayNetworkParameters() {
         TextView textViewDownload = findViewById(R.id.textView_Download);
         textViewDownload.setText("Download: \n\n" + "   " + ToastMbsDownload);
@@ -223,6 +249,8 @@ public class MainActivity extends AppCompatActivity {
         TextView textViewUpload = findViewById(R.id.textView_Upload);
         textViewUpload.setText("Upload: \n\n" + "   " + ToastMbsUpload);
     }
+
+    */
 
     public void getDownloadSpeed() {
 
@@ -259,7 +287,7 @@ public class MainActivity extends AppCompatActivity {
             char[] buffer = new char[4096];
             StringBuffer output = new StringBuffer();
             while ((i = reader.read(buffer)) > 0)
-                output.append(buffer, 140, 146);
+                output.append(buffer, 95, 146);
             reader.close();
             str = output.toString();
         } catch (IOException e) {
