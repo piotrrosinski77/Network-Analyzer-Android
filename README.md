@@ -6,4 +6,4 @@ This application is able to:
 - Check your IP address
 - Check your subnet mask
 
-\n Available soon in Google Play Store!
+Available soon in Google Play Store!
