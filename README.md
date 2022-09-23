@@ -5,3 +5,4 @@ This application is able to:
 - Send a PING request
 - Check your IP address
 - Check your subnet mask
+Available soon in Google Play Store!
