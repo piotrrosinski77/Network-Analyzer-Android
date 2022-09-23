@@ -1,4 +1,4 @@
-### Network88 Android app (100% JAVA)
+### Network88 Android app (Java)
 This application is able to:
 - Measure your download speed
 - Measure your upload speed
