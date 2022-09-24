@@ -1,4 +1,4 @@
-### Network88 Android app (Java)
+### 📱 Network88 Android app (Java)
 This application is able to:
 - Measure your download speed
 - Measure your upload speed
@@ -6,4 +6,4 @@ This application is able to:
 - Check your IP address
 - Check your subnet mask
 
-Available soon in Google Play Store!
+🛒 Available soon in Google Play Store!
