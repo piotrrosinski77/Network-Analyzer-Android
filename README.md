@@ -1,7 +1,9 @@
-### Network88 (Android)
-#### Temat projektu: Program obsługujący platformę mobilną, służący do analizy sieci bezprzewodowej.
-Funkcje aplikacji mobilnej:
-1. Wyświetla adres IP hosta.
-2. Pokazuje maskę podsieci.
-3. Mierzy prędkość pobierania i wysyłania plików lub danych z Internetu.
-4. Bada opóźnienie w transmisji pakietów (PING).
+### 📱 Network88 Android app (Java)
+This application is able to:
+- Measure your download speed
+- Measure your upload speed
+- Send a PING request
+- Check your IP address
+- Check your subnet mask
+
+🛒 Available soon in Google Play Store!
