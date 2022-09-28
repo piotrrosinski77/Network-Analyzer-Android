@@ -44,7 +44,6 @@ import fr.bmartel.speedtest.model.SpeedTestError;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    public String ping;
     public String mbsDownload;
     public String mbsUpload;
 
@@ -61,20 +60,23 @@ public class MainActivity extends AppCompatActivity {
 
         TextView textViewDownload = findViewById(R.id.textView_Download);
         TextView textViewUpload = findViewById(R.id.textView_Upload);
-        TextView textViewIP = findViewById(R.id.ip);
-        TextView textViewMask = findViewById(R.id.mask);
-        TextView textViewPing = findViewById(R.id.ping);
+        TextView textViewIP = findViewById(R.id.textViewIP);
+        TextView textViewMask = findViewById(R.id.textViewMask);
+        TextView textViewPing = findViewById(R.id.textViewPING);
 
-        Button runButton = (Button) findViewById(R.id.run);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        Button runButton = (Button) findViewById(R.id.runButton);
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Button runTestButton = (Button) v;
                 new Thread(new Runnable() {
                     public void run() {
-
                         getDownloadSpeed();
                         getUploadspeed();
+
                         SystemClock.sleep(3500);
 
                         runTestButton.post(new Runnable() {
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
                                 textViewIP.setText("IP Address:\n" + getIpAddress());
                                 textViewMask.setText("Subnet mask:\n" + getSubnetMask());
                                 textViewPing.setText("Pinging google.com\n= " + ping("google.com"));
+
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
                     }
@@ -103,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                             "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
                 }
             }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("currentSpeedDownload", "rate in Mbit/s: " + MbitFinalProgress);
                     mbsDownload = String.valueOf(MbitFinalProgress);
                 }
-            });
 
+            });
 
             speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/50M.iso", 5000);
 
@@ -226,31 +229,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
-
-    /*
-
-    ###############################################################################################
-
-    public void getSpecificInfo() {
-
-        TextView textViewMask = findViewById(R.id.mask);
-        textViewMask.setText("Subnet mask:\n" + getSubnetMask());
-
-        TextView textViewPing = findViewById(R.id.ping);
-        ping = ping("google.com");
-        textViewPing.setText("Pinging google.com\n= " + ping);
-    }
-
-
-    public void  displayNetworkParameters() {
-        TextView textViewDownload = findViewById(R.id.textView_Download);
-        textViewDownload.setText("Download: \n\n" + "   " + ToastMbsDownload);
-
-        TextView textViewUpload = findViewById(R.id.textView_Upload);
-        textViewUpload.setText("Upload: \n\n" + "   " + ToastMbsUpload);
-    }
-
-    */
 
     public void getDownloadSpeed() {
 

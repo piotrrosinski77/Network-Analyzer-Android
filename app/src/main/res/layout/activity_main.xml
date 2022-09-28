@@ -11,18 +11,17 @@
 
 
     <Button
-        android:id="@+id/run"
+        android:id="@+id/runButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="325dp"
         android:layout_height="75dp"
         android:layout_marginBottom="10dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8px"
-        android:paddingRight="8px"
         android:background="@drawable/roundedbutton"
         android:backgroundTint="@android:color/black"
-        android:onClick="runTest"
+        android:paddingLeft="8px"
+        android:paddingTop="4dp"
+        android:paddingRight="8px"
+        android:paddingBottom="4dp"
         android:shadowColor="#FFFFFF"
         android:text="@string/run_test"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
@@ -33,10 +32,12 @@
         app:iconTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPING"
+        app:layout_constraintVertical_bias="1.0"
         app:rippleColor="@color/black"
         app:strokeColor="@color/black" />
-
 
     <ImageView
         android:id="@+id/networkimage"
@@ -50,8 +51,21 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="76dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="48dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/runButton"
+        app:layout_constraintEnd_toStartOf="@+id/textView_Upload"
+        app:layout_constraintStart_toEndOf="@+id/textView_Download"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPING"
+        app:layout_constraintVertical_bias="0.742" />
+
     <TextView
-        android:id="@+id/ip"
+        android:id="@+id/textViewIP"
         android:layout_width="360dp"
         android:layout_height="52dp"
         android:layout_marginTop="168dp"
@@ -70,7 +84,7 @@
 
 
     <TextView
-        android:id="@+id/mask"
+        android:id="@+id/textViewMask"
         style="@style/size"
         android:layout_width="match_parent"
         android:layout_height="52dp"
@@ -89,10 +103,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/ping"
+        android:id="@+id/textViewPING"
         android:layout_width="0dp"
         android:layout_height="72dp"
-        android:layout_marginTop="288dp"
         android:background="@drawable/roundedbutton"
         android:minHeight="48dp"
         android:paddingLeft="14dp"
@@ -102,53 +115,53 @@
         android:text="PING:"
         android:textColor="@color/teal_200"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewMask"
+        app:layout_constraintVertical_bias="0.013" />
 
     <TextView
         android:id="@+id/textView_Download"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/circlebutton"
         android:paddingLeft="12dp"
         android:paddingTop="16dp"
         android:text="Download:"
         android:textColor="@color/teal_200"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/run"
+        app:layout_constraintBottom_toTopOf="@+id/runButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ping"
-        app:layout_constraintVertical_bias="0.862" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPING"
+        app:layout_constraintVertical_bias="0.384" />
 
     <TextView
         android:id="@+id/textView_Upload"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginStart="208dp"
-        android:layout_marginTop="176dp"
-        android:layout_marginBottom="42dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/circlebutton"
         android:paddingLeft="26dp"
         android:paddingTop="16dp"
         android:text="Upload:"
         android:textColor="@color/teal_200"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/run"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ping"
-        app:layout_constraintVertical_bias="0.862" />
+        app:layout_constraintBottom_toTopOf="@+id/runButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView_Download" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_end="-9dp" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier2"
@@ -156,19 +169,5 @@
         android:layout_height="wrap_content"
         app:barrierDirection="left"
         app:constraint_referenced_ids="networkimage" />
-        
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="150dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
