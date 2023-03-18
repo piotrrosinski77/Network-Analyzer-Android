@@ -3,7 +3,6 @@ package com.example.network88;
 
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
-
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -20,14 +19,12 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
 import com.example.network88.databinding.ActivityMainBinding;
 
 import java.io.BufferedReader;
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //Fullscreen mode.
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //Fullscreen mode (without toolbar on the top)
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -67,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         Button runButton = (Button) findViewById(R.id.runButton);
+
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
             });
 
-            speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/50M.iso", 5000);
+            speedTestSocket.startFixedDownload("http://speedtest.tele2.net/100MB.zip", 5000);
 
             return null;
         }
@@ -218,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            speedTestSocket.startFixedUpload("http://ipv4.ikoula.testdebit.info/", 10000000, 5000);
+            speedTestSocket.startFixedUpload("http://speedtest.tele2.net/upload.php", 10000000, 5000);
 
             return null;
         }
