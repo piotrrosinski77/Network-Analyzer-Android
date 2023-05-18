@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
             });
 
-            speedTestSocket.startFixedDownload("http://speedtest.tele2.net/100MB.zip", 5000);
+            speedTestSocket.startFixedDownload("https://speed.hetzner.de/100MB.bin", 5000);
 
             return null;
         }
@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            speedTestSocket.startFixedUpload("http://speedtest.tele2.net/upload.php", 10000000, 5000);
+            speedTestSocket.startFixedUpload("https://bouygues.testdebit.info/100M.iso", 10000000, 5000);
 
             return null;
         }
