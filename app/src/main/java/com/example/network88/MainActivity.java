@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
         String str = "";
         try {
             Process process = Runtime.getRuntime().exec(
-                    "/system/bin/ping -c " + url); //A library in Android, where PING command can be found.
+                    "/system/bin/ping -c 1 " + url); //A library in Android, where PING command can be found.
             new InputStreamReader(process.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     process.getInputStream()));

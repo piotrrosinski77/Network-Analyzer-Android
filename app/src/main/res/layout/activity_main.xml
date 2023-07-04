@@ -73,12 +73,12 @@
 
     <ImageView
         android:id="@+id/networkimage"
-        android:layout_width="477dp"
-        android:layout_height="289dp"
-        android:layout_marginBottom="436dp"
+        android:layout_width="490dp"
+        android:layout_height="302dp"
+        android:layout_marginBottom="25dp"
         android:scaleX="1.0"
         android:scaleY="0.9"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textViewMask"
         app:srcCompat="@drawable/networkimage"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp" />
