@@ -1,6 +1,9 @@
 package com.example.network88;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
@@ -19,12 +22,14 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
 import com.example.network88.databinding.ActivityMainBinding;
 
 import java.io.BufferedReader;
@@ -43,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     public String mbsDownload;
     public String mbsUpload;
+
+    int notificationId;
+    NotificationManager notificationManager;
+    Notification.Builder builder;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -89,6 +99,17 @@ public class MainActivity extends AppCompatActivity {
                                 textViewPing.setText("Pinging google.com\n= " + ping("google.com"));
 
                                 progressBar.setVisibility(View.INVISIBLE);
+
+                                builder =
+                                new Notification.Builder(MainActivity.this)
+                                        .setSmallIcon(R.drawable.ic_stat_name)
+                                        .setAutoCancel(true)
+                                        .setContentTitle("Powiadomienie")
+                                        .setContentText("Proste powiadomienie bez dodatkowej akcji");
+
+                                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                notificationManager.notify(notificationId, builder.build());
+
                             }
                         });
                     }
