@@ -1,9 +1,11 @@
 package com.example.network88;
 
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
-
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
@@ -44,9 +46,13 @@ import fr.bmartel.speedtest.model.SpeedTestError;
 public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    public String ping;
     public String mbsDownload;
     public String mbsUpload;
+
+    int notificationId;
+    NotificationManager notificationManager;
+    Notification.Builder builder;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
 
@@ -55,26 +61,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); //Fullscreen mode.
+                WindowManager.LayoutParams.FLAG_FULLSCREEN); //Fullscreen mode (without toolbar on the top)
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         TextView textViewDownload = findViewById(R.id.textView_Download);
         TextView textViewUpload = findViewById(R.id.textView_Upload);
-        TextView textViewIP = findViewById(R.id.ip);
-        TextView textViewMask = findViewById(R.id.mask);
-        TextView textViewPing = findViewById(R.id.ping);
+        TextView textViewIP = findViewById(R.id.textViewIP);
+        TextView textViewMask = findViewById(R.id.textViewMask);
+        TextView textViewPing = findViewById(R.id.textViewPING);
 
-        Button runButton = (Button) findViewById(R.id.run);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        Button runButton = (Button) findViewById(R.id.runButton);
+
         runButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Button runTestButton = (Button) v;
                 new Thread(new Runnable() {
                     public void run() {
-
                         getDownloadSpeed();
                         getUploadspeed();
+
                         SystemClock.sleep(3500);
 
                         runTestButton.post(new Runnable() {
@@ -87,6 +97,11 @@ public class MainActivity extends AppCompatActivity {
                                 textViewIP.setText("IP Address:\n" + getIpAddress());
                                 textViewMask.setText("Subnet mask:\n" + getSubnetMask());
                                 textViewPing.setText("Pinging google.com\n= " + ping("google.com"));
+
+                                progressBar.setVisibility(View.INVISIBLE);
+
+                                sendNotification();
+
                             }
                         });
                     }
@@ -103,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                             "No connection found. Connect your device and try again later.", Toast.LENGTH_LONG).show();
                 }
             }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,10 +181,10 @@ public class MainActivity extends AppCompatActivity {
                     Log.v("currentSpeedDownload", "rate in Mbit/s: " + MbitFinalProgress);
                     mbsDownload = String.valueOf(MbitFinalProgress);
                 }
+
             });
 
-
-            speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/50M.iso", 5000);
+            speedTestSocket.startFixedDownload("https://speed.hetzner.de/100MB.bin", 5000);
 
             return null;
         }
@@ -215,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            speedTestSocket.startFixedUpload("http://ipv4.ikoula.testdebit.info/", 10000000, 5000);
+            speedTestSocket.startFixedUpload("http://speedtest.tele2.net/upload.php", 10000000, 5000);
 
             return null;
         }
@@ -226,31 +240,6 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
     }
-
-    /*
-
-    ###############################################################################################
-
-    public void getSpecificInfo() {
-
-        TextView textViewMask = findViewById(R.id.mask);
-        textViewMask.setText("Subnet mask:\n" + getSubnetMask());
-
-        TextView textViewPing = findViewById(R.id.ping);
-        ping = ping("google.com");
-        textViewPing.setText("Pinging google.com\n= " + ping);
-    }
-
-
-    public void  displayNetworkParameters() {
-        TextView textViewDownload = findViewById(R.id.textView_Download);
-        textViewDownload.setText("Download: \n\n" + "   " + ToastMbsDownload);
-
-        TextView textViewUpload = findViewById(R.id.textView_Upload);
-        textViewUpload.setText("Upload: \n\n" + "   " + ToastMbsUpload);
-    }
-
-    */
 
     public void getDownloadSpeed() {
 
@@ -299,6 +288,19 @@ public class MainActivity extends AppCompatActivity {
     private static String intToIP(int ipAddress) {
         return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     } //Bitwise AND operation, Your subnet mask is ip address 192.168.232.2 gateway..., 0xff = 11111111...
+
+    public void sendNotification() {
+        builder =
+                new Notification.Builder(MainActivity.this)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setAutoCancel(true)
+                        .setContentTitle("Done!")
+                        .setContentText("Download speed: " + mbsDownload + " Mb/s" + "   " + "Upload speed: " + mbsUpload + " Mb/s");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationId, builder.build());
+
+    }
 
     public static void wait(int ms) //One may use it to delay next actions
     {
