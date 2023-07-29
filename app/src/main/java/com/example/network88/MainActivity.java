@@ -100,15 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 progressBar.setVisibility(View.INVISIBLE);
 
-                                builder =
-                                new Notification.Builder(MainActivity.this)
-                                        .setSmallIcon(R.drawable.ic_stat_name)
-                                        .setAutoCancel(true)
-                                        .setContentTitle("Powiadomienie")
-                                        .setContentText("Proste powiadomienie bez dodatkowej akcji");
-
-                                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                                notificationManager.notify(notificationId, builder.build());
+                                sendNotification();
 
                             }
                         });
@@ -296,6 +288,19 @@ public class MainActivity extends AppCompatActivity {
     private static String intToIP(int ipAddress) {
         return String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
     } //Bitwise AND operation, Your subnet mask is ip address 192.168.232.2 gateway..., 0xff = 11111111...
+
+    public void sendNotification() {
+        builder =
+                new Notification.Builder(MainActivity.this)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setAutoCancel(true)
+                        .setContentTitle("Done!")
+                        .setContentText("Download speed: " + mbsDownload + " Mb/s" + "   " + "Upload speed: " + mbsUpload + " Mb/s");
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationId, builder.build());
+
+    }
 
     public static void wait(int ms) //One may use it to delay next actions
     {
