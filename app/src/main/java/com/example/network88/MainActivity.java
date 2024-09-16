@@ -37,6 +37,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.bmartel.speedtest.SpeedTestReport;
 import fr.bmartel.speedtest.SpeedTestSocket;
@@ -144,6 +146,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class SpeedTestTaskDownload extends AsyncTask<Void, Void, String> {
+        private List<Double> speedResults = new ArrayList<>();
+        private int readingCount = 0; // licznik odczytów
+
+        public double getAverageSpeed() {
+            if (speedResults.isEmpty()) {
+                return 0; // Brak danych po 10 odczytach
+            }
+
+            double sum = 0;
+            for (double speed : speedResults) {
+                sum += speed;
+            }
+
+            return BigDecimal.valueOf(sum / speedResults.size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -177,19 +194,41 @@ public class MainActivity extends AppCompatActivity {
                     double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
                     double MbitFinalProgress = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
+                    readingCount++;
+
+                    // Pomijamy pierwsze 30 odczytów
+                    if (readingCount > 0) {
+                        speedResults.add(MbitFinalProgress);
+                    }
+
                     Log.v("progressDownload", "progress: " + percent + "%");
                     Log.v("currentSpeedDownload", "rate in Mbit/s: " + MbitFinalProgress);
-                    mbsDownload = String.valueOf(MbitFinalProgress);
+                    mbsDownload = String.valueOf(getAverageSpeed());
                 }
 
             });
 
-            speedTestSocket.startFixedDownload("https://speed.hetzner.de/100MB.bin", 5000);
+            speedTestSocket.startFixedDownload("https://hil-speed.hetzner.com/100MB.bin", 5000);
 
             return null;
         }
     }
     public class SpeedTestTaskUpload extends AsyncTask<Void, Void, String> {
+
+        private List<Double> uploadSpeedResults = new ArrayList<>();
+        private int uploadReadingCount = 0; // licznik odczytów dla uploadu
+        public double getAverageUploadSpeed() {
+            if (uploadSpeedResults.isEmpty()) {
+                return 0; // Brak danych po 10 odczytach
+            }
+
+            double sum = 0;
+            for (double speed : uploadSpeedResults) {
+                sum += speed;
+            }
+
+            return BigDecimal.valueOf(sum / uploadSpeedResults.size()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -223,9 +262,16 @@ public class MainActivity extends AppCompatActivity {
                     double Mbit = Double.parseDouble(String.valueOf(bit)) / 1000000;
                     double MbitFinalProgress = BigDecimal.valueOf(Mbit).setScale(2, RoundingMode.HALF_UP).doubleValue();
 
+                    uploadReadingCount++;
+
+                    // Pomijamy pierwsze 10 odczytów dla uploadu
+                    if (uploadReadingCount > 3 ) {
+                        uploadSpeedResults.add(MbitFinalProgress);
+                    }
+
                     Log.v("progressUpload", "progress: " + percent + "%");
                     Log.v("currentSpeedUpload", "rate in Mbit/s: " + MbitFinalProgress);
-                    mbsUpload = String.valueOf(MbitFinalProgress);
+                    mbsUpload = String.valueOf(getAverageUploadSpeed());
                 }
             });
 
